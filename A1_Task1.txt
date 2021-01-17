@@ -1,0 +1,41 @@
+.text
+main:
+addi $a0 ,$0,8
+jal fibbo 
+addi $a0,$v0,0
+li $v0,1
+syscall
+li $v0,10
+syscall
+
+fibbo: 
+beq $a0,$0,END1
+addi $t1,$s0,1
+beq $a0, $t1,END2
+addi $sp,$sp,-4
+sw $ra,0($sp)
+addi $a0,$a0,-1
+addi $sp,$sp,-4
+sw $a0,0($sp)
+jal fibbo
+lw $a0,0($sp)
+addi $sp,$sp,4
+addi $a0,$a0,-1
+addi $sp,$sp,-4
+sw $v0,0($sp)
+jal fibbo
+lw $t0,0($sp)
+addi $sp,$sp,4
+add $v0,$v0,$t0
+lw $ra,0($sp)
+addi $sp,$sp,4
+jr $ra
+END1:
+add $v0,$0,$0
+jr $ra
+END2:
+addi $v0,$0,1
+jr $ra
+
+
+

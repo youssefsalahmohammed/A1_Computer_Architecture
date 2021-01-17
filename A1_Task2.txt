@@ -1,0 +1,20 @@
+garply:
+addi $sp,$sp,-12
+sw $a0,0($sp)
+sw $a1,4($sp)
+sw $ra,8($sp)
+sra $a0,$a0,6
+jal subt
+# $v0 now contains c
+lw $t0,0($sp) 
+lw $t1,4($sp) 
+lw $t2,0($t1) # get *b
+add $t2,$t2,$t0
+sw $t2,0($t1) # update *b
+bltz $t0,END
+bltz $v0,END
+or $v0,$v0,$t0
+END:
+lw $ra,8($sp)
+addi $sp,$sp,12
+jr $ra
